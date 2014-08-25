@@ -39,6 +39,7 @@ content = new File(basedir, 'build.log').text;
 assert content.contains( '-draftCompile' );
 assert content.contains( '-failOnError' );
 assert content.contains( '-optimize 1' );
+assert content.contains( '-optimize 22' ); // from extraGwtArgs
 assert content.contains( '-Dgwt.persistentunitcache=true' );
 assert content.contains( '-XclosureCompiler' );
 assert content.contains( '-XnoaggressiveOptimizations' );

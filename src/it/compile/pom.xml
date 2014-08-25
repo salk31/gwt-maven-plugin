@@ -46,6 +46,7 @@
           <style>OBF</style>
           <draftCompile>true</draftCompile>
           <optimizationLevel>1</optimizationLevel>
+          <extraGwtArgs>-optimize 22</extraGwtArgs>
           <extraParam>true</extraParam>
           <soyc>false</soyc>
           <strict>true</strict>

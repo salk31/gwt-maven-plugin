@@ -98,6 +98,17 @@ public abstract class AbstractGwtShellMojo
     private File deploy;
 
     /**
+     * Extra GWT arguments that are passed to the GWT tools for new or experimental options.
+     * Use with caution, in most cases specific goal parameters should be used.
+     * <p>
+     * Can be set from command line using '-Dgwt.extraGwtArgs=...'.
+     * </p>
+     *
+     * @parameter expression="${gwt.extraGwtArgs}" default-value=""
+     */
+    private String extraGwtArgs;
+
+    /**
      * Extra JVM arguments that are passed to the GWT-Maven generated scripts (for compiler, shell, etc - typically use
      * -Xmx512m here, or -XstartOnFirstThread, etc).
      * <p>
@@ -175,6 +186,11 @@ public abstract class AbstractGwtShellMojo
     public abstract void doExecute()
         throws MojoExecutionException, MojoFailureException;
 
+    protected String getExtraGwtArgs()
+    {
+        return extraGwtArgs;
+    }
+
     protected String getExtraJvmArgs()
     {
         return extraJvmArgs;
@@ -203,6 +219,20 @@ public abstract class AbstractGwtShellMojo
         throws MojoExecutionException
     {
         // Nothing to do in most case
+    }
+
+    private List<String> getGwtArgs()
+    {
+        List<String> extra = new ArrayList<String>();
+        String userExtraGwtArgs = getExtraGwtArgs();
+        if ( userExtraGwtArgs != null )
+        {
+            for ( String extraArg : userExtraGwtArgs.split( " " ) )
+            {
+                extra.add( extraArg );
+            }
+        }
+        return extra;
     }
 
     private List<String> getJvmArgs()
@@ -448,6 +478,7 @@ public abstract class AbstractGwtShellMojo
             }
             command.add( className );
             command.addAll( args );
+            command.addAll( getGwtArgs() );
 
             try
             {
